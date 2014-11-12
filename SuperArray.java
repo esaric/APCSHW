@@ -9,8 +9,11 @@ public class SuperArray{
 			L.add(new Integer(i));
 		}
 		System.out.println(L);
-		System.out.println(L.remove(5));
+		L.add(11);
 		System.out.println(L);
+		System.out.println(L.remove(1));
+		System.out.println(L);
+		System.out.println(L.get(5));
 	}
 	
     public SuperArray(){
@@ -31,22 +34,18 @@ public class SuperArray{
     }
 
     public void add(Object e){
-		if (storedElements == data.length){
-			resize(data.length + 1);
-		}
-		data[storedElements] = e;
-		storedElements++;
+		add(storedElements, e);
     }
 	
 	public void add(int index, Object o){
 		if (storedElements == data.length){
-			resize(data.length + 1);
+			resize(data.length * 2);
 		}
 		for (int i = storedElements; i > index; i--) {
 			data[i] = data[i-1];
 		}
 		if (index < 0 || index > size()) {
-			System.out.println("ERROR: Index out of range");
+			throw new IndexOutOfBoundsException();
 		}else{
 			data[index] = o;
 			storedElements++;
@@ -77,8 +76,7 @@ public class SuperArray{
 	
 	public Object get(int index){
 		if (index < 0 || index >= size()) {
-			System.out.println("ERROR: Index out of range");
-			return null;
+			throw new IndexOutOfBoundsException();
 		}
 		return data[index];
     }
@@ -86,23 +84,24 @@ public class SuperArray{
     public Object set(int index, Object o){
 		Object replaced = data[index];
 		if (index < 0 || index >= size()) {
-			System.out.println("ERROR: Index out of range");
-			return null;
+			throw new IndexOutOfBoundsException();
 		}
 		data[index] = o;
 		return replaced;
 	}
 	
 	public Object remove(int index){
+		if (storedElements < data.length / 4) {
+			resize(data.length / 2);
+		}
 		Object replaced = data[index];
 		if (index < 0 || index >= size()) {
-			System.out.println("ERROR: Index out of range");
-			return null;
+			throw new IndexOutOfBoundsException();
 		}
 		for (int i = index; i < storedElements - 1; i++) {
 			data[i] = data[i+1];
 		}
-		resize(storedElements - 1);
+		data[storedElements-1] = null;
 		return replaced;
 	}
 }
