@@ -17,8 +17,8 @@ public class WordGrid{
 
     /**Set all values in the WordGrid to underScores '_'*/
     private void clear(){
-		for (int i = 0; i < rows; i++){
-			for (int j = 0; j < rows; j++){
+		for (int i = 0; i < data.length; i++){
+			for (int j = 0; j < data[0].length; j++){
 				data[i][j] = '_';
 			}
 		}
@@ -38,7 +38,32 @@ public class WordGrid{
 		}
 		return output;
     }
-
+	
+	/**Verifies whether a given word fits to the specified position of the WordGrid.*/
+	public boolean isLegalPosition(String word, int row, int col, int dx, int dy){
+		if (dx == 0 && dy == 0 ||
+			dx < -1 || dx > 1 ||
+			dy < -1 || dy > 1 ||
+			row < 0 || row > data.length || 
+			col < 0 || col > data[0].length){
+			return false;
+		}
+		int[] wordRange = new int[word.length()];
+		for (int x = 0; x < word.length(); x++){
+			wordRange[x] = x;
+		}
+		for ( int i : wordRange ){
+			try{
+				if ((char)data[row + i*dy][col + i*dx] != '_' && (char)data[row + i*dy][col + i*dx] != word.charAt(i)){
+					return false;
+				}
+			}catch (ArrayIndexOutOfBoundsException e){
+				return false;
+			}
+			System.out.println((char)data[row + i*dy][col + i*dx]);
+		}
+		return true;
+	}
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added in a direction corresponding with dx and dy, must 
 	 *fit on the WordGrid, and must have a corresponding letter to match 
@@ -52,7 +77,7 @@ public class WordGrid{
      *@return true when the word is added successfully. When the word doesn't fit,
      *or there are overlapping letters that do not match, then false is returned.
      */
-    public boolean addWord(String word,int row, int col){
+    public boolean addWord(String word, int row, int col, int dx, int dy){
 		return true;
     }
 
