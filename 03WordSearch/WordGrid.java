@@ -1,6 +1,9 @@
+import java.util.Random;
+
 public class WordGrid{
 	private char[][] data;
-
+	Random rng = new Random();
+	//rng.setSeed(seed);
     /**Initialize the grid to the size specified and fill all of the positions
      *with underScores.
      *@param row is the starting height of the WordGrid
@@ -24,6 +27,10 @@ public class WordGrid{
 		}
     }
 
+	public void setSeed(long seed){
+		rng.setSeed(seed);
+	}
+	
     /**The proper formatting for a WordGrid is created in the toString.
      *@return a String with each character separated by spaces, and each row
      *separated by newlines.
@@ -75,7 +82,7 @@ public class WordGrid{
 	 *@param dx is the horizontal increment (-1, 0, 1).
 	 *@param dy is the vertical increment (-1, 0 , 1).
      *@return true when the word is added successfully. When the word doesn't fit,
-     *or there are overlapping letters that do not match, then false is returned.
+     *or there are overlapping letters that do not match, false is returned.
      */
     public boolean addWord(String word, int row, int col, int dx, int dy){
 		int[] wordRange = new int[word.length()];
@@ -91,4 +98,24 @@ public class WordGrid{
 			return false;
 		}
     }
+	/**Attempts to add a given word to a random position of the WordGrid.
+     *The word is added in a direction corresponding with dx and dy, must 
+	 *fit on the WordGrid, and must have a corresponding letter to match 
+	 *any letters that it overlaps.
+     *
+     *@param word is any text to be added to the word grid.
+	 *@return true when the word is added successfully. When the word doesn't fit,
+     *or there are overlapping letters that do not match, false is returned.
+     */
+	public boolean addWordRandomly(String word){
+		for (int tries = 100; tries > 0; tries--){
+			if (addWord(word, rng.nextInt(data.length), 
+							  rng.nextInt(data[0].length), 
+							  rng.nextInt(2) - 1, 
+							  rng.nextInt(2) - 1)){
+				return true;
+			}
+		}
+		return false;
+	}
 }
