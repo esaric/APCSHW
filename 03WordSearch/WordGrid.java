@@ -2,7 +2,8 @@ import java.util.*;
 
 public class WordGrid{
 	private char[][] data;
-	Random rng = new Random();
+	private ArrayList<String> addedWords;
+	Random rng;
 	//rng.setSeed(seed);
     /**Initialize the grid to the size specified and fill all of the positions
      *with underScores.
@@ -11,8 +12,10 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 		data = new char[rows][cols];
+		rng = new Random();
+		addedWords = new ArrayList<String>();
 		for (int i = 0; i < rows; i++){
-			for (int j = 0; j < rows; j++){
+			for (int j = 0; j < cols; j++){
 				data[i][j] = '_';
 			}
 		}
@@ -26,6 +29,17 @@ public class WordGrid{
 			}
 		}
     }
+	
+	public void fillGrid(){
+		for (int i = 0; i < data.length; i++){
+			for (int j = 0; j < data[0].length; j++){
+				if (data[i][j] == '_'){
+					char randomLetter = (char)(97 + rng.nextInt(26));
+					data[i][j] = randomLetter;
+				}
+			}
+		}
+	}
 
 	public void setSeed(long seed){
 		rng.setSeed(seed);
@@ -99,9 +113,6 @@ public class WordGrid{
 		}
     }
 	/**Attempts to add a given word to a random position of the WordGrid.
-     *The word is added in a direction corresponding with dx and dy, must 
-	 *fit on the WordGrid, and must have a corresponding letter to match 
-	 *any letters that it overlaps.
      *
      *@param word is any text to be added to the word grid.
 	 *@return true when the word is added successfully. When the word doesn't fit,
@@ -120,8 +131,24 @@ public class WordGrid{
 	}
 	
 	public void addWordList(ArrayList<String> wordList){
-		for (int tries = wordList.size(); tries > 0; tries --){
-			addWordRandomly(wordList.get(rng.nextInt(wordList.size())));
+		for (int i = 0; i < wordList.size(); i ++){
+			String chosenWord = wordList.get(i);
+			if(addWordRandomly(chosenWord)){
+				addedWords.add(chosenWord);
+			}
 		}
+	}
+	
+	public String wordsInPuzzle(){
+		String outString = "";
+		int count = 0;
+		for ( String i : addedWords ){
+			if (count % 5 == 0){
+				outString += "\n\n";
+			}
+			outString += i + " ";
+			count++;
+		}
+		return outString + "\n";
 	}
 }

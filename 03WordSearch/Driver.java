@@ -24,6 +24,8 @@ public class Driver{
         }
 		//System.out.println(wordList);
 		a.addWordList(wordList);
+		System.out.println(a.wordsInPuzzle());
+		a.fillGrid();
 		System.out.println(a);
 	}
 }
