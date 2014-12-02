@@ -23,7 +23,7 @@ public class Driver{
             wordList.add(word);
         }
 		//System.out.println(wordList);
-		a.addWordRandomly("doggy");
+		a.addWordList(wordList);
 		System.out.println(a);
 	}
 }

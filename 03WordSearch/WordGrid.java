@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 
 public class WordGrid{
 	private char[][] data;
@@ -117,5 +117,11 @@ public class WordGrid{
 			}
 		}
 		return false;
+	}
+	
+	public void addWordList(ArrayList<String> wordList){
+		for (int tries = wordList.size(); tries > 0; tries --){
+			addWordRandomly(wordList.get(rng.nextInt(wordList.size())));
+		}
 	}
 }
