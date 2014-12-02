@@ -60,7 +60,7 @@ public class WordGrid{
 			}catch (ArrayIndexOutOfBoundsException e){
 				return false;
 			}
-			System.out.println((char)data[row + i*dy][col + i*dx]);
+			//System.out.println((char)data[row + i*dy][col + i*dx]);
 		}
 		return true;
 	}
@@ -78,8 +78,17 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWord(String word, int row, int col, int dx, int dy){
-		return true;
+		int[] wordRange = new int[word.length()];
+		for (int x = 0; x < word.length(); x++){
+			wordRange[x] = x;
+		}
+		if (isLegalPosition(word, row, col, dx, dy)) {
+			for ( int i : wordRange ) {
+				data[row + i*dy][col + i*dx] = word.charAt(i);
+			}
+			return true;
+		}else{
+			return false;
+		}
     }
-
-    //vertical + diagonal should be implemented as well.
 }
