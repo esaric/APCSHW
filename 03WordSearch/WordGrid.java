@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class WordGrid{
@@ -38,6 +40,21 @@ public class WordGrid{
 					data[i][j] = randomLetter;
 				}
 			}
+		}
+	}
+	
+	public void loadWordsFromFile(String fileName, boolean fillRandomLetters) throws FileNotFoundException{
+		File text = new File(fileName);
+        Scanner scnr = new Scanner(text);
+		
+		ArrayList<String> wordList = new ArrayList<String>();
+        while(scnr.hasNextLine()){
+            String word = scnr.nextLine();
+            wordList.add(word);
+        }
+		addWordList(wordList);
+		if (fillRandomLetters){
+			fillGrid();
 		}
 	}
 
