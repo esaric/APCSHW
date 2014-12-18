@@ -52,4 +52,17 @@ public class Sort{
 			//System.out.println("---------------------");
 		}
 	}
+	
+	public static void insertion(int[] list){
+		int partition; 
+		int i;
+		
+		for (int j = 1; j < list.length; j++){
+			partition = list[j];
+			for(i = j-1; (i >= 0) && (list[i] > partition); i--){
+				list[i+1] = list[i];
+			}
+			list[i+1] = partition;
+		}
+	}
 }
