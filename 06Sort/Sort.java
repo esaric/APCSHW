@@ -24,9 +24,32 @@ public class Sort{
 					list[i+1] = temp;
 					swaps++;
 				}
-				if (swaps == 0)
+				if (swaps == 0){
 					break;
+				}
 			}
+		}
+	}
+	
+	public static void selection(int[] list){
+		int temp;
+		int min;
+		
+		for (int j = 0; j < list.length - 1; j++){
+			min = j;
+			for (int i = j+1; i < list.length; i++){
+				//System.out.println(list[min]);
+				if (list[i] < list[min]){
+					min = i;
+				}
+			}
+			
+			if (min != j){
+				temp = list[j];
+				list[j] = list[min];
+				list[min] = temp;
+			}
+			//System.out.println("---------------------");
 		}
 	}
 }
